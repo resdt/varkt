@@ -1,4 +1,4 @@
-from src.functions import *
+from src.utils import *
 
 
 def main():

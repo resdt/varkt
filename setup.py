@@ -1,5 +1,5 @@
-from src.main import main
+import src.main as main_module
 
 
 if __name__ == "__main__":
-    main()
+    main_module.main()
