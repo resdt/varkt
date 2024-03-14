@@ -1,5 +1,9 @@
 import src.main as main_module
 
 
-if __name__ == "__main__":
+def main():
     main_module.main()
+
+
+if __name__ == "__main__":
+    main()
