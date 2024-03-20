@@ -1,2 +1,6 @@
+lib/plot-data.txt
+out/
+tmp/
+
 # Python cache
 **/__pycache__

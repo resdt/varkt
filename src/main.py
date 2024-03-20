@@ -1,10 +1,14 @@
-from src.utils import *
+import src.PATH as path
+import src.utils as utl
+
+
+OUT_TABLE_PATH = path.OUT_TABLE_PATH
+PLOT_TABLE_PATH = path.PLOT_TABLE_PATH
+
+write_flight_log = utl.write_flight_log
+make_plot = utl.make_plot
 
 
 def main():
-    data_dir = "lib/plot-data.txt"
-    output_dir = "out/output.txt"
-
-    flight_process(data_dir, output_dir)
-
-    plot(data_dir)
+    write_flight_log(OUT_TABLE_PATH)
+    make_plot(PLOT_TABLE_PATH)
