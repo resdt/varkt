@@ -1,4 +1,5 @@
 import os
+import shutil as sht
 import csv
 import math
 import pandas as pd
@@ -91,3 +92,8 @@ def make_plot(data_dir, out_dir=OUT_PICT_PATH):
     os.makedirs(OUT_FOLD, exist_ok=True)
     fig = ax.ravel()[0].get_figure()
     fig.savefig(OUT_PICT_PATH)
+
+
+def clean_dir(dir_to_clean=TMP_FOLD):
+    if os.path.isdir(dir_to_clean):
+        sht.rmtree(dir_to_clean)
