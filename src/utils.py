@@ -6,42 +6,41 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 import src.PATH as path
-import src.constants as cst
 
 
 TMP_FOLD = path.TMP_FOLD
 OUT_FOLD = path.OUT_FOLD
 
-PLOT_TABLE_PATH = path.PLOT_TABLE_PATH
-OUT_TABLE_PATH = path.OUT_TABLE_PATH
-OUT_PICT_PATH = path.OUT_PICT_PATH
+PLOT_TABLE_PATH = f"{TMP_FOLD}/plot-data.csv"
 
-M0_ROCKET = cst.M0_ROCKET
-RHO0 = cst.RHO0
-THAU = cst.THAU
-G = cst.G
-M_EARTH = cst.M_EARTH
-R_EARTH = cst.R_EARTH
-PI = cst.PI
-THRUST = cst.THRUST
-ENV_RES = cst.ENV_RES
-S_ROCKET = cst.S_ROCKET
-M_MASS_AIR = cst.M_MASS_AIR
-R = cst.R
-T0_AIR = cst.T0_AIR
-M0_FUEL = cst.M0_FUEL
-T_FUEL = cst.T_FUEL
+# Глобальные константы
+G = 6.6743 * 10**-11  # Гравитационная постоянная
+R_EARTH = 6378100  # Радиус Земли
+M_EARTH = 5.9742 * 10**24  # Масса Земли
+ENV_RES = 0.4  # Коэффициент сопротивления среды
+M_MASS_AIR = 0.029  # Молярная масса воздуха
+R = 8.314  # Универсальная газовая постоянная
+PI = math.pi
+
+# Начальные значения
+M0_ROCKET = 344040  # Масса ракеты
+M0_FUEL = 284000  # Масса топлива
+T_FUEL = 253  # Время, на которое хватит топлива
+S_ROCKET = 13.28  # Площадь поверхности ракеты, на которую действует среда
+THAU = 104  # Время полета
+RHO0 = 1.225  # Плотность
+THRUST = 41520000  # Тяга двигателя
+T0_AIR = 288  # Температура воздуха (считаем постоянной)
 
 
-def write_flight_log(output_dir=OUT_TABLE_PATH):
+def write_flight_log(output_dir):
     os.makedirs(TMP_FOLD, exist_ok=True)
     plot_table = open(PLOT_TABLE_PATH, "w", newline="")
     plot_writer = csv.writer(plot_table)
     plot_writer.writerow(["Time", "ax", "ay",
-                         "vx", "vy", "Height",
-                         "Mass", "Density"])
+                          "vx", "vy", "Height",
+                          "Mass", "Density"])
 
-    os.makedirs(OUT_FOLD, exist_ok=True)
     out_table = open(output_dir, "w", newline="")
     out_writer = csv.writer(out_table)
     out_writer.writerow(["Time", "Velocity", "Acceleration",
@@ -76,7 +75,7 @@ def write_flight_log(output_dir=OUT_TABLE_PATH):
     out_table.close()
 
 
-def make_plot(data_dir, out_dir=OUT_PICT_PATH):
+def make_plot(out_dir, data_dir=PLOT_TABLE_PATH):
     df = pd.read_csv(data_dir)
 
     plt.style.use("ggplot")
@@ -89,11 +88,10 @@ def make_plot(data_dir, out_dir=OUT_PICT_PATH):
 
     plt.show()
 
-    os.makedirs(OUT_FOLD, exist_ok=True)
     fig = ax.ravel()[0].get_figure()
-    fig.savefig(OUT_PICT_PATH)
+    fig.savefig(out_dir)
 
 
-def clean_dir(dir_to_clean=TMP_FOLD):
+def clean_dir(dir_to_clean):
     if os.path.isdir(dir_to_clean):
         sht.rmtree(dir_to_clean)
