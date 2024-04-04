@@ -11,30 +11,29 @@ import src.PATH as path
 TMP_FOLD = path.TMP_FOLD
 OUT_FOLD = path.OUT_FOLD
 
-PLOT_TABLE_PATH = f"{TMP_FOLD}/plot-data.csv"
+PLOT_TABLE_PATH = path.PLOT_TABLE_PATH
 
-# Глобальные константы
-G = 6.6743 * 10**-11  # Гравитационная постоянная
-R_EARTH = 6378100  # Радиус Земли
-M_EARTH = 5.9742 * 10**24  # Масса Земли
-ENV_RES = 0.4  # Коэффициент сопротивления среды
-M_MASS_AIR = 0.029  # Молярная масса воздуха
-R = 8.314  # Универсальная газовая постоянная
+# Global constants
+G = 6.6743 * 10**-11  # Gravitational constant
+R_EARTH = 6378100  # Earth radius
+M_EARTH = 5.9742 * 10**24  # Earth mass
+ENV_RES = 0.4  # Environment resistance coefficient
+M_MASS_AIR = 0.029  # Molar air mass
+R = 8.314  # Universal gas constant
 PI = math.pi
 
-# Начальные значения
-M0_ROCKET = 344040  # Масса ракеты
-M0_FUEL = 284000  # Масса топлива
-T_FUEL = 253  # Время, на которое хватит топлива
-S_ROCKET = 13.28  # Площадь поверхности ракеты, на которую действует среда
-THAU = 104  # Время полета
-RHO0 = 1.225  # Плотность
-THRUST = 41520000  # Тяга двигателя
-T0_AIR = 288  # Температура воздуха (считаем постоянной)
+# Initial values
+M0_ROCKET = 344040  # Rocket mass
+M0_FUEL = 284000  # Fuel mass
+T_FUEL = 253  # Time for which the fuel will last
+S_ROCKET = 13.28  # Surface area of ​​the rocket affected by the environment
+THAU = 104  # Flight duration
+RHO0 = 1.225  # Density
+THRUST = 41520000  # Engine thrust
+T0_AIR = 288  # Air temperature (considered constant)
 
 
 def write_flight_log(output_dir):
-    os.makedirs(TMP_FOLD, exist_ok=True)
     plot_table = open(PLOT_TABLE_PATH, "w", newline="")
     plot_writer = csv.writer(plot_table)
     plot_writer.writerow(["Time", "ax", "ay",
@@ -75,7 +74,7 @@ def write_flight_log(output_dir):
     out_table.close()
 
 
-def make_plot(out_dir, data_dir=PLOT_TABLE_PATH):
+def make_plot(data_dir, out_dir):
     df = pd.read_csv(data_dir)
 
     plt.style.use("ggplot")
