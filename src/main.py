@@ -7,8 +7,7 @@ import src.utils as utl
 TMP_FOLD = path.TMP_FOLD
 OUT_FOLD = path.OUT_FOLD
 
-PLOT_TABLE_PATH = path.PLOT_TABLE_PATH
-
+PLOT_TABLE_PATH = f"{TMP_FOLD}/plot-data.csv"
 OUT_TABLE_PATH = f"{OUT_FOLD}/flight-log.csv"
 OUT_PICT_PATH = f"{OUT_FOLD}/plot.png"
 
