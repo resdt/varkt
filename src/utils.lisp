@@ -45,11 +45,10 @@
           for cur_g = #I(M_EARTH * G / (R_EARTH+h)^^2)
           and alpha = #I(pi/2 - pi*time/300)
 
-          do (setf plot-data (append plot-data
-                                     (list (list time ax ay vx vy h m density)))
-                   out-data (append out-data
-                                    (list (list time v a m h)))
-                   ax #I((cos(alpha) * THRUST -
+          do (push (list time ax ay vx vy h m density) plot-data)
+             (push (list time v a m h) out-data)
+
+             (setf ax #I((cos(alpha) * THRUST -
                              ENV_RES * density * vx^^2 * S_ROCKET / 2)
                          / m)
                    ay #I((sin(alpha) * THRUST -
@@ -62,7 +61,10 @@
                    v #I(sqrt(vx^^2 + vy^^2))
                    a #I(sqrt(ax^^2 + ay^^2))
                    m #I(M0_ROCKET - M0_FUEL*time/T_FUEL)
-                   h #I(h + vy)))
+                   h #I(h + vy))
+
+          finally (setf plot-data (reverse plot-data)
+                        out-data (reverse out-data)))
 
     (cl-csv:write-csv plot-data
                       :stream PLOT-TABLE-PATH)
